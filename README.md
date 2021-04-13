@@ -10,20 +10,21 @@ Requirements: You will need [Docker](https://docs.docker.com/engine/install/) & 
 3. change the _domain_ and _email_ with your data
 4. check name for _network_ and the _path_ for _volumes_ etc.
 5. set your own _password_ for MySQL/MariaDB **root user** and **Nextcloud DB user**
-6.  check `memory-limit.ini` and edit it if necessary
-7.  check `my_proxy.conf` and edit the value if necessary
-8. start it with `docker-compose up`
+6.  check `nextcloud.ini` and edit it with your values if necessary
+7.  check `my_proxy.conf` and edit the values if necessary
+8. start it with `docker-compose up -d`
 9. open a browser and enter your preset domain 
 10. finish the initial Nextcloud Setup
 11. it might be to add `'overwriteprotocol' => 'https',` to the `config.php` for Nextcloud to get `https` only and make desktop and mobile authorization work
 12. add `'filelocking.enabled' => false,` to the `config.php` to avoid filelocking
 13. add `'default_phone_region' => 'DE',`to the `config.php` to enable default locale on your Nextcloud server (e.g. Germany)
-13. open the container `nextcloud-app` with `docker exec -it nextcloud-app bash` and navigate to `/var/www/html/config` to open `config.php` with vi/vim and add the line from point 11. 
+14. navigate to `your-path/app/config` to open `config.php` with vi/vim and add the line from point 11. - 13.
+15. optional: it might be you have to install manually SVG support. Exec it with `Docker exec -it nextcloud-app bash` and execute in the container `apt update && apt install -y libmagickcore-6.q16-6-extra` and reboot the service e.g. `docker-compose restart app` (use the name of your defined server from compose file.)
 
 ### Planned improvements:
 
 * improving security by using passwords in a more secure way
-* add point 12 automatically with the initial setup
+* add point 11 - 13 automatically with the initial setup
 
 
 The following Repos/Hub-images have been used:
