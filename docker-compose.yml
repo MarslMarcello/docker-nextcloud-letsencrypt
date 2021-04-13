@@ -46,8 +46,8 @@ services:
             - /etc/localtime:/etc/localtime:ro
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --transaction_isolation=READ-COMMITTED --binlog_format=ROW --innodb_large_prefix=on --innodb_file_format=barracuda --innodb_file_per_table=1
         environment:
-            MYSQL_ROOT_PASSWORD: yourpasswordhere
-            MYSQL_PASSWORD: yourpasswordhere
+            MYSQL_ROOT_PASSWORD: 4lIl_98cqCk(qJCj#9?48cqJ
+            MYSQL_PASSWORD: 8cqCk34lIl_9(qJCj#9?48cqJCj#9?4
             MYSQL_DATABASE: nextcloud
             MYSQL_USER: nextcloud
         restart: unless-stopped
@@ -68,12 +68,21 @@ services:
             - ./app/data:/var/www/html/data
             - ./app/themes:/var/www/html/themes
             - /etc/localtime:/etc/localtime:ro
-            - ./memory-limit.ini:/usr/local/etc/php/conf.d/memory-limit.ini:ro
+            - ./nextcloud.ini:/usr/local/etc/php/conf.d/nextcloud.ini:ro
         environment:
             - VIRTUAL_HOST=YOUR.DOMAIN.HERE
             - LETSENCRYPT_HOST=YOUR.DOMAIN.HERE
             - LETSENCRYPT_EMAIL=YOUR.EMAIL.HERE   
         restart: unless-stopped
+    
+    cron:
+        image: nextcloud:latest
+        restart: always
+        volumes:
+            - nextcloud:/var/www/html
+        entrypoint: /cron.sh
+        depends_on:
+            - db
         
 volumes:
     nextcloud:
